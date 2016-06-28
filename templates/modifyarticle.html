@@ -1,0 +1,122 @@
+{% extends base.html %}
+
+{% block stylesheet %}
+{% from views import util %}
+<link rel="stylesheet" href="{{ static_url('css/editormd.css') }}" />
+{% end %}
+
+{% block article %}
+<div class="customnewarticle">
+    <form class="form-horizontal" action=""
+          method="POST">
+        {% module xsrf_form_html() %}
+        <input name="id" value="{{ article['id'] }}" hidden>
+        <div class="form-group">
+            <label class="col-sm-1 control-label">标题</label>
+
+            <div class="col-sm-11">
+                <input type="text" name="title" class="form-control"
+                       placeholder="文章标题" value="{{ article['title'] }}">
+            </div>
+        </div>
+        <!--分类 -->
+        <div class="form-group">
+            <label class="col-sm-1  control-label">分类</label>
+
+            <div class="col-sm-4">
+                <select type="text" class="form-control" name="category">
+                    {% for category in  categoryList %}
+                    <option value="{{ category['id'] }}"
+                            {% if category['id'] == article['category_id'] %}selected{% end %}>
+                        {{ category['name'] }}
+                    </option>
+                    {% end %}
+                </select>
+            </div>
+        </div>
+
+        <!--标签 -->
+        <div class="form-group">
+            <label class="col-sm-1  control-label">标签</label>
+
+            <div class="btn-group col-sm-4 " data-toggle="buttons">
+                {% for tag in  tagList %}
+
+                <label class="btn btn-primary
+                {% if type(article['tags_id']) in (list,tuple) and tag['id'] in article['tags_id'] %}
+                active
+                {% elif tag['id'] == article['tags_id']%}
+                active
+                {% end %}" >
+                    <input
+                        type="checkbox" name="tag" value="{{ tag['id'] }}" autocomplete="off"
+                            {% if type(article['tags_id']) in (list,tuple) and tag['id'] in article['tags_id'] %}
+                        checked
+                            {% elif tag['id'] == article['tags_id']%}
+                        checked
+                            {% end %}>
+                    {{ tag['name'] }}
+                </label>
+                {% end %}
+            </div>
+        </div>
+
+
+        <!--日期 -->
+        <div class="form-group">
+            <label class="col-sm-1 control-label">日期</label>
+
+            <div class="col-sm-4">
+                <input class="form-control" readonly name="date" type="text" id="datetimepicker"
+                       value="{{ util.convertDateForTemplate(article['date'],"%Y-%m-%d %H:%M:%S") }}">
+            </div>
+        </div>
+
+
+        <input class="form-control" name="content" type="text"
+               style="display: none" id="content1">
+
+
+                <div id="editormd">
+                    <textarea style="display:none;">{% raw article['content'] %}</textarea>
+                </div>
+
+        <div class="modal-footer">
+
+            <button id="btn1" type="submit" class="btn btn-sm btn-success">
+                <span>修改</span> <i
+                    class="glyphicon glyphicon-send fa fa-arrow-right icon-on-right"></i>
+            </button>
+        </div>
+    </form>
+
+</div>
+{% end %}
+
+{% block script %}
+
+    <script type="text/javascript"
+    src="{{ static_url('js/editormd.min.js') }}"></script>
+
+<script type="text/javascript">
+
+
+    var editor = editormd("editormd", {
+        path : "/static/lib/", // Autoload modules mode, codemirror, marked... dependents libs path
+        width :'100%',
+        height:450,
+
+        theme : "dark",
+        previewTheme : "dark",
+        editorTheme : 'pastel-on-dark'
+    });
+    editor.setToolbarAutoFixed(false);
+    $('#btn1').click(function () {
+        var md = editor.getMarkdown();
+
+
+        $("#content1").val(md.replace( /\r?\n/g,"<br>"));
+    });
+
+</script>
+{% end %}

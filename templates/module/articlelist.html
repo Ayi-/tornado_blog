@@ -1,0 +1,46 @@
+{% from views import util %}
+{% for article in articleList %}
+<div class="col-md-12">
+    <h1>
+        <a href='{{ reverse_url("articleDetail",article['id']) }}'> {{ article['title'] }}
+        </a>
+    </h1>
+
+    <div style="margin: 10px;">
+			<span style="color: #005CEB;"><i
+                    class="glyphicon glyphicon-calendar"></i> <a
+                    href="{{ reverse_url("articleDate",util.convertDateForTemplate(article['date'],"%Y-%m-%d"),"") }}" >
+                {{ util.convertDateForTemplate(article['date'],"%Y-%m-%d %H:%M:%S") }}
+
+            </a>
+			</span>
+    </div>
+    <div>
+
+        {% raw article['summary'] %}...
+        <div style="margin: 10px;">
+				<span style="color: #005CEB;"><i
+                        class="glyphicon glyphicon-menu-hamburger"></i> 分类：
+                    <a href="{{ reverse_url("articleCategory",article['category_id'],"") }}">
+                        {{ article['category_name'] }}
+                    </a> </span><span
+                style="color: #005CEB;"><i class="glyphicon glyphicon-tags"></i>
+					标签：
+                {% if  type(article['tags_name']) in (list,tuple) %}
+
+
+                {% for index,tag in enumerate(article['tags_name']) %}
+
+						<a href="{{ reverse_url("articleTag",article['tags_id'][index],"") }}">
+                            {{ tag }}</a>
+                {% end %}
+                {% elif  article['tags_name'] %}
+                <a href="{{ reverse_url("articleTag",article['tags_id'],"") }}">
+                    {{ article['tags_name'] }}</a>
+            {% end %} </span>
+        </div>
+        <hr
+                style="margin-top: 15px; margin-bottom: 15px; height: 1px; border: 0px; background-color: #D5D5D5; color: #D5D5D5;"/>
+    </div>
+</div>
+{% end %}

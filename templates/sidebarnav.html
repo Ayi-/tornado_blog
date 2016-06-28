@@ -1,0 +1,74 @@
+<nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <h1 style="display: inline;">
+            <a href="{{ reverse_url("/","") }}"><img class="logo"
+                                                     src="{{ static_url("img/44988844.jpg") }}" alt="AE"></a>
+        </h1>
+        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span> <span
+                class="icon-bar"></span> <span class="icon-bar"></span> <span
+                class="icon-bar"></span>
+        </button>
+        <p style="margin-top: 10px; font-size: 16px;">
+            <!--从session中获取登陆用户 -->
+            <!--
+                User user = (User) session.getAttribute("user");
+            -->
+            <!--选择判断，如果登陆了就切换显示 -->
+            <!--注销设置 -->
+            {% if current_user %}
+            <a href="{{ reverse_url("logout") }}" data-toggle="tooltip"
+               data-placement="top" title="点击注销哦！"> {{ current_user }}
+            </a>
+            <!--添加新文章 -->
+
+        <div class="customnav">
+            <a data-toggle="tooltip" data-placement="top" title="新建文章~"
+               href="{{ reverse_url("addArticle") }}"> <i
+                    class="glyphicon glyphicon-pencil"></i><span> Add Article</span></a>
+        </div>
+        {% try %}
+        {% if modifyFlag %}
+        <div class="customnav">
+            <a data-toggle="tooltip" data-placement="top" title="修改本文章~"
+               href="{{ reverse_url("ModifyArticle",article['id']) }}"> <i
+                    class="glyphicon glyphicon-erase"></i><span> Modify Article</span></a>
+        </div>
+        {% if article %}
+        <div class="customnav">
+            <a id="delete" data-toggle="tooltip" data-placement="top" title="删除本文章~"
+               style="cursor:pointer"> <i
+                    class="glyphicon glyphicon-remove"></i><span> Delete Article</span></a>
+        </div>
+        {% end %}
+        {% end %}
+        {% except %}
+        {% end %}
+        {% else %}
+        <a id="login" href="#"> Login </a>
+        {% end %}
+        </p>
+
+    </div>
+
+    <hr style="margin: 10px; height: 1px; border: 0px; background-color: #D5D5D5; color: #D5D5D5;"/>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="{{ reverse_url("/","") }}">Blog</a></li>
+            <li><a href="{{ reverse_url("articleCategory",1,"") }}">Life</a></li>
+            <li><a href="{{ reverse_url("articleCategory",2,"") }}">Study</a></li>
+        </ul>
+
+        <form class="input-group">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button">Search</button>
+				</span>
+        </form>
+    </div>
+    <!-- /.navbar-collapse --> </nav>

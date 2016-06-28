@@ -1,0 +1,141 @@
+{% extends base.html %}
+
+{% block article %}
+{% from views import util %}
+{% if article %}
+
+
+<div>
+    <h1 id="articleTitle">
+        {{ article['title'] }}
+    </h1>
+
+    <div style="margin: 10px;">
+		<span style="color: #005CEB;"><i
+                class="glyphicon glyphicon-calendar"></i> <a
+                href="{{ reverse_url("articleDate",util.convertDateForTemplate(article['date'],"%Y-%m-%d"),"") }}">
+            {{ util.convertDateForTemplate(article['date'],"%Y-%m-%d %H:%M:%S") }}</a> </span>
+    </div>
+
+    {% module GetMarkdown(article['content']) %}
+    <div style="margin: 10px;">
+				<span style="color: #005CEB;"><i
+                        class="glyphicon glyphicon-menu-hamburger"></i> 分类：
+                    <a href="{{ reverse_url("articleCategory",article['category_id'],"") }}">
+                        {{ article['category_name'] }}
+                    </a> </span><span
+            style="color: #005CEB;"><i class="glyphicon glyphicon-tags"></i>
+					标签：
+                {% if  type(article['tags_name'])==list or type(article['tags_name'])==tuple %}
+
+
+                {% for index,tag in enumerate(article['tags_name']) %}
+
+						<a href="{{ reverse_url("articleTag",article['tags_id'][index],"") }}">
+                            {{ tag }}</a>
+                {% end %}
+                {% elif article['tags_name'] %}
+                <a href="{{ reverse_url("articleTag",article['tags_id'],"") }}">
+                    {{ article['tags_name'] }}</a>
+            {% end %} </span>
+
+    </div>
+    <hr
+            style="margin-top: 15px; margin-bottom: 15px; height: 1px; border: 0px; background-color: #D5D5D5; color: #D5D5D5;"/>
+</div>
+
+{% end %}
+{% end %}
+
+
+{% block FormSet %}
+<div class="modal fade" id="Check" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" style="margin-top: 200px">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">删除确认</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <p id="deleteContent"></p>
+
+                            <div class="modal-footer">
+                                <button class="btn pull-left btn-sm" data-dismiss="modal"
+                                        aria-label="Close">
+                                    <i class="glyphicon glyphicon-remove"></i> <span>取消</span>
+                                </button>
+                                {% module xsrf_form_html() %}
+                                <button class="btn btn-sm btn-success"
+                                        name="submit" id="deleteOk" value="register">
+                                    <span>确定删除</span> <i
+                                        class="glyphicon glyphicon-ok"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% end %}
+
+{% block script %}
+<script type="text/javascript">
+    $('#delete').on('click', function () {
+
+        $('#wrap').addClass('filter2');
+        $('#deleteContent').text("要删除  " + $('#articleTitle').text() + "  这篇文章吗？");
+        $('#Check').on('shown.bs.modal', function () {
+
+            $(this).off('shown.bs.modal');
+
+        })/*显示模态框结束*/
+                .modal('show')
+                .on('hidden.bs.modal', function () {
+                    $('#wrap').removeClass('filter2');
+
+                    $(this).off('hidden.bs.modal');
+
+
+                });
+    });
+    {% if article %}
+    function getCookie(name) {
+        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+        return r ? r[1] : undefined;
+    }
+
+    $("#deleteOk").click(function () {
+        _xsrf = getCookie("_xsrf");
+        console.log(_xsrf);
+        $.ajax({
+            url: '{{ reverse_url("DelArticle",article['id']) }}',
+            type: 'DELETE',
+            headers: { 'X-XSRFToken' : _xsrf },
+            success: function (msg, textStatus) {
+                // Do something with the result
+                if (msg=='redirect') {
+                    // data.redirect contains the string URL to redirect to
+                    window.location.href = '/';
+                }
+                else {
+                    console.log(msg);
+                }
+            }
+        });
+    });
+    {% end %}
+</script>
+{% end %}

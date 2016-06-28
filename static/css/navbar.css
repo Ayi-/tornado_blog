@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+@media ( min-width : 768px) {
+    .navbar-collapse {
+        height: auto;
+        border-top: 0;
+        box-shadow: none;
+        max-height: none;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .navbar-collapse.collapse {
+        display: block !important;
+        width: auto !important;
+        padding-bottom: 0;
+        overflow: visible !important;
+    }
+    .navbar-collapse.in {
+        overflow-x: visible;
+    }
+    .navbar {
+        text-align: center;
+        margin: 0 auto;
+        border: 0;
+        color: #999;
+        background-color: white;
+        width: 15%;
+        position: fixed;
+        top: 5%;
+        bottom:5%;
+        overflow-x:hidden;
+        overflow-y:visible;
+    }
+    .navbar-nav, .navbar-nav>li, .navbar-left, .navbar-right, .navbar-header
+    {
+        float: none !important;
+    }
+    .navbar-right .dropdown-menu {
+        left: 0;
+        right: auto;
+    }
+    .navbar-collapse .navbar-nav.navbar-right:last-child {
+        margin-right: 0;
+    }
+    .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus,
+    .navbar-default .navbar-nav>.active>a:hover {
+        border-left: 2px solid #25AAEA;
+        font-weight: 400;
+        color: black;
+        background-color: white;
+    }
+    .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus,
+    .navbar-default .navbar-nav>.open>a:hover .navbar-nav>a:hover {
+        border-left: 2px solid #25AAEA;
+        font-weight: 400;
+        color: black;
+        background-color: white;
+    }
+    .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover
+    {
+        border-right: 2px solid #25AAEA;
+    }
+}

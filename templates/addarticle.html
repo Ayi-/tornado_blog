@@ -1,0 +1,185 @@
+{% extends base.html %}
+{% from views import util %}
+{% block stylesheet %}
+
+<!--日期插件 -->
+<link rel="stylesheet" type="text/css"
+      href="{{ static_url('css/bootstrap-datetimepicker.min.css') }}">
+
+{% end %}
+
+{% block article %}
+
+
+<div class="customnewarticle">
+	<form class="form-horizontal" action=""
+		method="POST">
+        {% module xsrf_form_html() %}
+		<div class="form-group">
+			<label class="col-sm-1 control-label">标题</label>
+			<div class="col-sm-11">
+				<input type="text" name="title" class="form-control"
+					placeholder="文章标题">
+			</div>
+		</div>
+        <!--分类 -->
+		<div class="form-group">
+			<label class="col-sm-1  control-label">分类</label>
+			<div class="col-sm-4">
+				<select type="text" class="form-control" name="category">
+					{% for category in  categoryList %}
+                    <option value="{{ category['id'] }}">{{ category['name'] }}</option>
+					{% end %}
+				</select>
+			</div>
+		</div>
+
+		<!--标签 -->
+		<div class="form-group">
+			<label class="col-sm-1  control-label">标签</label>
+			<div class="btn-group col-sm-4 " data-toggle="buttons">
+                {% for tag in  tagList %}
+
+                <label class="btn btn-primary"> <input
+                        type="checkbox" name="tag" value="{{ tag['id'] }}"
+                        autocomplete="off">
+                    {{ tag['name'] }}
+                </label>
+                {% end %}
+			</div>
+		</div>
+
+
+        <!--日期 -->
+		<div class="form-group">
+			<label class="col-sm-1 control-label">日期</label>
+			<div class="col-sm-4">
+				<input class="form-control" readonly name="date" type="text" id="datetimepicker">
+			</div>
+		</div>
+
+
+		<input class="form-control" name="content" type="text"
+			style="display: none" id="content">
+        <!--富文本 -->
+		<div class="form-group">
+			<div id="div1" style="height: 400px; max-height: 500px"></div>
+		</div>
+
+		<div class="modal-footer">
+
+			<button id="btn1" type="submit" class="btn btn-sm btn-success">
+				<span>创建</span> <i
+					class="glyphicon glyphicon-send fa fa-arrow-right icon-on-right"></i>
+			</button>
+		</div>
+	</form>
+
+</div>
+{% end %}
+
+
+{% block script %}
+
+<!--富文本插件 -->
+<script type="text/javascript"
+        src="{{ static_url('js/wangEditor.js') }}"></script>
+
+<!--日期插件 -->
+<script type="text/javascript"
+        src="{{ static_url('js/bootstrap-datetimepicker.min.js') }}"></script>
+<script type="text/javascript">
+    var editor = new wangEditor('div1');
+    // 上传图片
+    editor.config.uploadImgUrl = "{{ reverse_url("imageupload") }}";
+
+    // 关闭js过滤
+    editor.config.jsFilter = false;
+    // 取消粘贴过滤
+    editor.config.pasteFilter = false;
+    // 自定义菜单
+    editor.config.menus = [
+        'source',
+        '|',
+        'bold',
+        'underline',
+        'italic',
+        'strikethrough',
+        'eraser',
+        'forecolor',
+        'bgcolor',
+        '|',
+        'quote',
+        'fontfamily',
+        'fontsize',
+        'head',
+        'unorderlist',
+        'orderlist',
+        'alignleft',
+        'aligncenter',
+        'alignright',
+        '|',
+        'link',
+        'unlink',
+        'table',
+
+        '|',
+        'img',
+
+        'location',
+        'insertcode',
+        '|',
+        'undo',
+        'redo',
+        'fullscreen'
+    ];
+    editor.create();
+    $('#btn1').click(function() {
+        // 获取编辑器区域完整html代码
+        var html = editor.$txt.html();
+        console.log(html);
+        // 获取编辑器纯文本内容
+        var text = editor.$txt.text();
+        $("#content").val(html.replace(/\n/g,"<br/>"));
+        //alert(html);
+        //console.log(text);
+    });
+    ///////////////////////////////////
+
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
+    // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
+    Date.prototype.Format = function(fmt) { //author: meizz
+        var o = {
+            "M+" : this.getMonth() + 1, //月份
+            "d+" : this.getDate(), //日
+            "h+" : this.getHours(), //小时
+            "m+" : this.getMinutes(), //分
+            "s+" : this.getSeconds(), //秒
+            "q+" : Math.floor((this.getMonth() + 3) / 3), //季度
+            "S" : this.getMilliseconds()
+            //毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "")
+                    .substr(4 - RegExp.$1.length));
+        for ( var k in o)
+            if (new RegExp("(" + k + ")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k])
+                        : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    };
+
+    if ($('#datetimepicker').val() == "")
+        $('#datetimepicker').val(new Date().Format('yyyy-MM-dd hh:mm:ss'));
+
+    $('#datetimepicker').datetimepicker({
+        format : 'yyyy-mm-dd hh:ii:ss',
+        todayBtn : true,
+        todayHighlight : true
+    });
+</script>
+{% end %}

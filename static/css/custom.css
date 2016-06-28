@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+.wrapbody {
+    margin-top: 1%;
+    margin-bottom: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.filter2 {
+    -webkit-filter: blur(1px);
+    -moz-filter: blur(1px);
+    -o-filter: blur(1px);
+    -ms-filter: blur(1px);
+    filter: blur(1px);
+}
+
+.logo {
+    max-height: 60%;
+    max-width: 60%;
+    border-radius: 50px;
+}
+
+.customnav {
+    /* 设置用户导航样式*/
+    margin: 10px;
+}
+
+.customnewarticle {
+
+    margin-right: 5%;
+}

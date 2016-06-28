@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/navbar.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/style.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ static_url('img/favicon.ico') }}"/>
+    <link rel="bookmark" href="{{ static_url('img/favicon.ico') }}"/>
+    <link href="{{ static_url('css/custom.css') }}" rel="stylesheet">
+
+    {% block stylesheet %}
+    {% end %}
+
+    <title>
+        {% block title %}
+        首页
+        {% end %}
+    </title>
+</head>
+<body>
+<div id="wrap" class="wrapbody">
+    <!--侧边栏设置 -->
+    {% include 'sidebarnav.html' %}
+    <div class="container-fluid"
+         style="float: right; width: 80%; min-height: 100%; position: relative;">
+        <div  class="row">
+
+            {% block article %}
+
+            {% end %}
+        </div>
+
+    </div>
+</div>
+{% block FormSet %}
+
+{% end %}
+{% if not current_user %}
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" style="margin-top: 200px">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">登陆</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 col-lg-12">
+                            <form class="form-horizontal" action="{{ reverse_url("login") }}"
+                                  method="GET">
+                                <label>用户名</label> <input class="form-control" name="username"
+                                                          type="text" value=""> <label>密码</label> <input
+                                    class="form-control" name="password" type="password" value="">
+
+                                <div class="modal-footer">
+                                    <button type="reset" class="btn pull-left btn-sm">
+                                        <i class="glyphicon glyphicon-refresh fa fa-refresh"></i> <span>重置</span>
+                                    </button>
+
+                                    <button type="submit" class="btn btn-sm btn-success"
+                                            name="submit" value="register">
+                                        <span>登记</span> <i
+                                            class="glyphicon glyphicon-send fa fa-arrow-right icon-on-right"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% end %}
+{% module GetFlashedMessages(True) %}
+</body>
+
+
+<script type="text/javascript" src="{{ static_url('js/jquery-2.2.0.min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
+
+<script>
+    //登陆
+    $('#login').on('click', function () {
+
+        $('#wrap').addClass('filter2');
+
+        $('#myModal').on('shown.bs.modal', function () {
+
+            $(this).off('shown.bs.modal');
+
+        })/*显示模态框结束*/
+
+                .modal('show')
+
+                .on('hidden.bs.modal', function () {
+                    $('#wrap').removeClass('filter2');
+
+                    $(this).off('hidden.bs.modal');
+                });
+    });
+
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+    //提示框操作：定时消失和触碰消失
+    $('[role="alert"]').hover(function () {
+        $(this).remove("*");})
+            .fadeTo(5000, 500).slideUp(500, function () {
+                $(this).remove("*");});
+</script>
+
+{% block script %}
+{% end %}
+</html>

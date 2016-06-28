@@ -1,0 +1,47 @@
+{% extends base.html %}
+{% block article %}
+
+
+{% if articleList %}
+    {% module ArticleList(articleList) %}
+{% else %}
+    <h4>这里乃不毛之地~</h4>
+{% end %}
+    <div id="pagination"></div>
+{% end %}
+
+{% block script %}
+{% if articleList %}
+<!-- 分页插件 -->
+<script type="text/javascript"
+        src="{{ static_url('js/jquery.twbsPagination.js') }}"></script>
+
+<script type="text/javascript">
+    var flag = -1;
+    if( parseInt({{ totalPages }}) > 5)
+         totalPages=5;
+    else
+        totalPages={{ totalPages }};
+    $('#pagination').twbsPagination({
+        startPage: {{ startPage }},
+        totalPages: {{ totalPages }},
+        visiblePages: totalPages,
+        version: '1.1',
+
+        onPageClick: function (event, page) {
+            flag++;
+            if(flag)
+            {
+                location.href=""+page;
+            }
+
+        },
+        first: '首页',
+        prev: '上一页',
+        next: '下一页',
+        last: '末页'
+    });
+
+</script>
+{% end %}
+{% end %}
