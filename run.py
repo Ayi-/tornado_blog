@@ -1,6 +1,5 @@
 #-*- coding:utf-8 -*-
 import sys
-from tornado_mysql import pools,cursors
 
 reload(sys)
 sys.setdefaultencoding("utf8")
