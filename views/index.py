@@ -27,6 +27,11 @@ class BaseHandler(tornado.web.RequestHandler,FlashHandler):
         # 获取连接
         self.application.conn.ping(True)
 
+class Index(BaseHandler):
+
+    def get(self):
+        self.render("resource.html")
+
 class Login(BaseHandler):
     """
     登陆
@@ -39,17 +44,17 @@ class Login(BaseHandler):
             if password not in(None,"") and password not in(None,""):
 
                 with self.application.conn.cursor() as cursor:
-                    cursor.execute("select username,email from user where username = %s and password = %s", (username,password))
+                    cursor.execute("select username,email from user where binary  username = %s and binary  password = %s", (username,password))
                     result = cursor.fetchone()
                     print result
 
                     if result:
                         self.set_secure_cookie("user",result.get("username"))
-                        print result.get("username")
-                    self.redirect(self.get_argument("next","/"))
-                    return
+                        self.redirect(self.get_argument("next","/"))
+                        return
+                    self.flash(u"用户名或密码错误！")
             else:
-                self.flash(u"用户名或密码错误")
+                self.flash(u"用户名或密码不能为空！")
         else:
             self.flash(u"不要重复登陆！",'error')
         self.redirect("/")

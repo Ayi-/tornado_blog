@@ -2,8 +2,8 @@
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
         <h1 style="display: inline;">
-            <a href="{{ reverse_url("/","") }}"><img class="logo"
-                                                     src="{{ static_url("img/44988844.jpg") }}" alt="AE"></a>
+            <a href="{{ reverse_url("/") }}"><img class="logo"
+                                                  src="{{ static_url("img/44988844.jpg") }}" alt="AE"></a>
         </h1>
         <button type="button" class="navbar-toggle" data-toggle="collapse"
                 data-target=".navbar-ex1-collapse">
@@ -57,9 +57,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav">
-            <li><a href="{{ reverse_url("/","") }}">Blog</a></li>
+            <li><a href="{{ reverse_url("index","1") }}">Blog</a></li>
             <li><a href="{{ reverse_url("articleCategory",1,"") }}">Life</a></li>
             <li><a href="{{ reverse_url("articleCategory",2,"") }}">Study</a></li>
+            <li><a id="aboutme" style="cursor: pointer">About me</a></li>
         </ul>
 
         <form class="input-group">
@@ -67,8 +68,62 @@
                 <input type="text" class="form-control" placeholder="Search">
             </div>
 				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">Search</button>
+					<button id="search" class="btn btn-default" type="button">Search</button>
 				</span>
         </form>
     </div>
     <!-- /.navbar-collapse --> </nav>
+
+<script type="text/javascript">
+
+    $("#aboutme ").click(function () {
+
+        $.confirm({
+            title: false,
+            columnClass: 'col-md-6 col-md-offset-3',
+            backgroundDismiss: true,
+            keyboardEnabled: true,
+
+            confirmButton: false, // hides the confirm button.
+            cancelButton: 'Close',
+            closeIcon: true, // hides the close icon.
+            content: '<div style="text-align:center">'
+            + '</br>'
+            + '<img src="{{ static_url('img/miku.jpg') }}" style="height:128px;width:128px;border-radius:50%">'
+            + '</br>'
+            + '<h4>Eli</h4>'
+            + '<div>小有追求的Pythonista</div>'
+            + '<p>'
+            + '<div>半个程序猿 | ω・´)</div>'
+            + '<div>(ゝ∀･)专注Python,Android...</div>'
+            + '<div>喜欢初音ミク，游戏，动画，（和交流吧？(´∀((☆ミつ）)</div>'
+
+            + '</p><p>欢迎联系~'
+            + '<div>邮箱：<a href="mailto:eli.pyer@gmail.com">eli.pyer@gmail.com</a></div>'
+            + '<div>我的主页：<a href="http://www.chen-jingyi.cn">http://www.chen-jingyi.cn</a></div>'
+
+            + '<div>GitHub：<a href="https://github.com/Ayi-">https://github.com/Ayi-</a></div>'
+            + '</p>'
+            + '</div>'
+        });
+    });
+
+    $("#search").click(function () {
+
+        $.confirm({
+            title: false,
+            columnClass: 'col-md-2 col-md-offset-5',
+            backgroundDismiss: true,
+            keyboardEnabled: true,
+
+            confirmButton: false, // hides the confirm button.
+            cancelButton: false,
+            closeIcon: true, // hides the close icon.
+            content: '<div style="text-align:center">'
+
+            + 'Σ( ﾟдﾟ)'
+            + '</br>还没想好要不要做'
+            + '</div>'
+        });
+    });
+</script>

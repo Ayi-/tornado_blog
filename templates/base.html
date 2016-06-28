@@ -9,7 +9,8 @@
     <link rel="shortcut icon" href="{{ static_url('img/favicon.ico') }}"/>
     <link rel="bookmark" href="{{ static_url('img/favicon.ico') }}"/>
     <link href="{{ static_url('css/custom.css') }}" rel="stylesheet">
-
+    <link href="{{ static_url('css/jquery-confirm.css') }}" rel="stylesheet">
+    <script type="text/javascript" src="{{ static_url('js/jquery-2.2.0.min.js') }}"></script>
     {% block stylesheet %}
     {% end %}
 
@@ -85,9 +86,10 @@
 </body>
 
 
-<script type="text/javascript" src="{{ static_url('js/jquery-2.2.0.min.js') }}"></script>
-<script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
 
+<script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/jquery.sticky.min.js') }}"></script>
+<script type="text/javascript" src="{{ static_url('js/jquery-confirm.js') }}"></script>
 <script>
     //登陆
     $('#login').on('click', function () {

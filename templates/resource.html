@@ -1,0 +1,139 @@
+<html xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <title>
+    </title>
+    <link href="{{ static_url('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ static_url('css/jquery-confirm.css') }}" rel="stylesheet">
+
+    <style type="text/css">
+
+        /*Zoom.Quiet
+            + 100913 fixed base old index.html*/
+        body {
+            background: #272822;
+            font-family: helvetica, arial, verdana, sans-serif;
+            font-size: 14px;
+            color: #fefefe;
+        }
+
+        img {
+            border: 0;
+        }
+
+        hr {
+            width: 50%;
+            height: 2px;
+            background: #333;
+            border: 1px solid #aaa;
+            clear: both;
+            margin-left: 25%;
+            float: left;
+        }
+
+        #main {
+            font-size: 200%;
+        }
+
+
+    </style>
+    <script type="text/javascript" src="{{ static_url('js/jquery-2.2.0.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/jquery.sticky.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('js/jquery-confirm.js') }}"></script>
+
+
+    <script type="text/javascript">
+        window.onload = (function () {
+            $(window).resize(function () {
+
+                $('.vertical-container').css({
+                    position: 'absolute',
+                    left: ($(window).width()
+                    - $('.vertical-container').outerWidth()) / 2,
+                    top: ($(window).height()
+                    - $('.vertical-container').outerHeight()) / 2
+                });
+
+            });
+
+            $(window).resize();
+            $(window).resize();
+        });
+
+        $('#node2').css("cursor", "pointer");
+
+    </script>
+</head>
+
+<body>
+
+
+<div id="contain" class="vertical-container">
+    <!-- CONTENT -->
+    <img src="{{ static_url('img/eli.png') }}" usemap="#elimap" alt="elimap" id="mymap">
+    <map id="elimap" name="elimap">
+        <area shape="rect" id="node1" href="https://github.com/Ayi-/tornado_blog" title="AE 资源图谱\n淡泊以明志，宁静以致远\n" alt="" coords="33,84,198,116"/>
+        <area shape="rect" id="node2" title="About me" alt="" coords="79,29,151,59"/>
+        <area shape="rect" id="node3" href="/1" title="&lt;TABLE&gt;" alt=""
+              coords="5,297,225,402"/>
+        <area shape="rect" id="node4" href="/1" title="个人主页" alt="" coords="413,5,495,35"/>
+        <area shape="rect" id="node5" href="http://www.jianshu.com/users/49a347786559/timeline" title="简书" alt=""
+              coords="418,59,490,88"/>
+        <area shape="rect" id="node6" href="https://github.com/Ayi-" title="GitHub" alt="" coords="418,112,490,141"/>
+        <area shape="rect" id="node9" href="http://scw.worldoftanks.cn/zh-cn/community/accounts/1809413692-AyEi/"
+              title="坦克世界" alt="" coords="413,165,495,195"/>
+        <area shape="rect" id="node10" href="luoqi.tiancity.com/" title="Mabinogi" alt="" coords="411,219,497,248"/>
+        <area shape="rect" id="node11" href="https://zh.wikipedia.org/wiki/%E5%88%9D%E9%9F%B3%E6%9C%AA%E4%BE%86"
+              title="Miku" alt="" coords="418,272,490,301"/>
+        <area shape="rect" id="node13" href="http://weekly.pychina.org/" title="PythonWeekly" alt=""
+              coords="609,325,728,355"/>
+        <area shape="rect" id="node16" href="http://119.29.169.15/zhihu/public/" title="主页" alt=""
+              coords="633,379,705,408"/>
+        <area shape="rect" id="node18" href="http://dmgeek.com/" title="盗梦极客VR" alt="" coords="620,432,717,461"/>
+        <area shape="rect" id="node24" href="http://music.163.com/#/user/home?id=55310453" title="网易云音乐" alt=""
+              coords="405,565,503,595"/>
+        <area shape="rect" id="node25" href="http://www.zhihu.com/" title="知乎" alt="" coords="418,619,490,648"/>
+        <area shape="rect" id="node21" href="http://www.acfun.tv/" title="Acfun" alt="" coords="633,485,705,515"/>
+        <area shape="rect" id="node22" href="http://www.bilibili.com/" title="BiliBili" alt=""
+              coords="625,539,712,568"/>
+        <area shape="rect" id="node23" href="http://bbs.ngacn.cc/" title="NGA" alt="" coords="633,592,705,621"/>
+    </map>
+
+</div>
+
+<script type="text/javascript">
+
+    $("#node2").click(function () {
+
+        $.confirm({
+            title: false,
+            columnClass: 'col-md-6 col-md-offset-3',
+            backgroundDismiss: true,
+            keyboardEnabled: true,
+            confirmButton: '',
+            confirmButton: false, // hides the confirm button.
+            cancelButton: 'Close',
+            closeIcon: true, // hides the close icon.
+            content: '<div style="text-align:center">'
+            + '</br>'
+            + '<img src="{{ static_url('img/miku.jpg') }}" style="height:128px;width:128px;border-radius:50%">'
+            + '</br>'
+            + '<h4>Eli</h4>'
+            + '<div>小有追求的Pythonista</div>'
+            + '<p>'
+            + '<div>半个程序猿 | ω・´)</div>'
+            + '<div>(ゝ∀･)专注Python,Android...</div>'
+            + '<div>喜欢初音ミク，游戏，动画，（和交流吧？(´∀((☆ミつ）)</div>'
+
+            + '</p><p>欢迎联系~'
+            + '<div>邮箱：<a href="mailto:eli.pyer@gmail.com">eli.pyer@gmail.com</a></div>'
+            + '<div>我的主页：<a href="http://www.chen-jingyi.cn">http://www.chen-jingyi.cn</a></div>'
+
+            + '<div>GitHub：<a href="https://github.com/Ayi-">https://github.com/Ayi-</a></div>'
+            + '</p>'
+            + '</div>'
+        });
+    });
+</script>
+</body>
+</html>

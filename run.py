@@ -18,7 +18,7 @@ from settings import settings as config
 import pymysql
 
 # 使用命令行配置数据库参数，或者使用setting的配置文件
-#python run.py --port=8888 --mysqlhost=192.168.7.7 --mysqlport=3306 --mysqldatabase=spring_blog --mysqluser=root --mysqlpassword=0000
+#python run.py --port=8000 --mysqlhost=192.168.56.1 --mysqlport=3306 --mysqldatabase=blog_tornado --mysqluser=root --mysqlpassword=0000
 define("port",default=config.WEB_PORT,help="run on the given port",type = int)
 # 数据库配置
 define("mysqlhost", default=config.DATABASES.get("host"),help="database host",type=str)
@@ -30,7 +30,8 @@ define("mysqlpassword",default=config.DATABASES.get("password"), help="database 
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            tornado.web.URLSpec(r"/(\d*)",ArticlePage,name="/"),
+            tornado.web.URLSpec(r"/",Index,name="/"),
+            tornado.web.URLSpec(r"/(\d*)",ArticlePage,name="index"),
             tornado.web.URLSpec(r"/login",Login,name="login"),
             tornado.web.URLSpec(r"/logout",Logout,name="logout"),
             tornado.web.URLSpec(r"/article/detail/(\d+)",ArticleDetail,name="articleDetail"),
