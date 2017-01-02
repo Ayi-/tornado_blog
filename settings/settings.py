@@ -19,14 +19,14 @@ settings = {
 }
 
 #设置端口监听
-WEB_PORT=8000
+WEB_PORT=8001
 # 数据库配置
 DATABASES={
-"host":"192.168.1.1", # 数据库主机ip
+"host":"127.0.0.1", # 数据库主机ip
 "port":3306,  # 端口
-"database":"database",  # 数据库名称
-"user":"user",  # 用户名
-"password":"password",  # 密码
+"database":"spring_blog",  # 数据库名称
+"user":"root",  # 用户名
+"password":"0000",  # 密码
 }
 
 # 上传文件目录

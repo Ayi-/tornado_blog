@@ -146,3 +146,8 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml 
 # *.ipr
+blog - 副本.sql
+Dockerfile
+blog-nginx.ini
+log/
+settings/settings.py.bak
