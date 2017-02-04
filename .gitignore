@@ -151,3 +151,4 @@ Dockerfile
 blog-nginx.ini
 log/
 settings/settings.py.bak
+docker-readme.md
